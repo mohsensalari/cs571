@@ -1,0 +1,5 @@
+.idea/
+.DS_Store
+*.*~
+cs571.iml
+target/MANIFEST.MF
