@@ -73,19 +73,19 @@ public abstract class WeightVector implements Serializable
 	}
 	
 	/** Adds the value to the weight in {@link #indexOf(int, int)}. */
-	public void add(int label, int featureIndex, float value)
+	public void add(int label, int featureIndex, double value)
 	{
 		weight_vector[indexOf(label, featureIndex)] += value;
 	}
 	
-	public void update(Vector x, int label, float gradient)
+	public void update(Vector x, int label, double gradient)
 	{
 		for (IndexValuePair p : x)
 			add(label, p.getIndex(), gradient * p.getValue());
 	}
 	
 	/** @param gradient takes the (label, featureIndex) and returns the gradient to update. */
-	public void update(Vector x, int label, BiFunction<Integer,Integer,Float> gradient)
+	public void update(Vector x, int label, BiFunction<Integer,Integer,Double> gradient)
 	{
 		for (IndexValuePair p : x)
 			add(label, p.getIndex(), gradient.apply(label, p.getIndex()) * p.getValue());

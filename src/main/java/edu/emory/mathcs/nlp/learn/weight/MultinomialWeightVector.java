@@ -17,8 +17,8 @@ package edu.emory.mathcs.nlp.learn.weight;
 
 import java.util.Arrays;
 
-import edu.emory.mathcs.nlp.common.DSUtils;
 import edu.emory.mathcs.nlp.common.collection.tuple.Pair;
+import edu.emory.mathcs.nlp.common.util.DSUtils;
 import edu.emory.mathcs.nlp.learn.util.Prediction;
 import edu.emory.mathcs.nlp.learn.vector.IndexValuePair;
 import edu.emory.mathcs.nlp.learn.vector.Vector;
@@ -30,6 +30,12 @@ public class MultinomialWeightVector extends WeightVector
 {
 	private static final long serialVersionUID = 2190946158451118027L;
 
+	public MultinomialWeightVector()
+	{
+		super(0, 0);
+		weight_vector = new float[0];
+	}
+	
 	public MultinomialWeightVector(int labelSize, int featureSize)
 	{
 		super(labelSize, featureSize);
@@ -60,7 +66,6 @@ public class MultinomialWeightVector extends WeightVector
 		weight_vector = vector;
 		label_size    = labelSize;
 		feature_size  = featureSize;
-		
 		return true;
 	}
 	
@@ -83,10 +88,13 @@ public class MultinomialWeightVector extends WeightVector
 		
 		for (IndexValuePair p : x)
 		{
-			index = indexOf(p.getIndex());
-			
-			for (i=0; i<label_size; i++)
-				scores[i] += weight_vector[index+i] * p.getValue();
+			if (p.getIndex() < feature_size)
+			{
+				index = indexOf(p.getIndex());
+				
+				for (i=0; i<label_size; i++)
+					scores[i] += weight_vector[index+i] * p.getValue();	
+			}
 		}
 		
 		return scores;

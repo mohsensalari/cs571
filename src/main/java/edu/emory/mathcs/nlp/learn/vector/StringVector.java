@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.emory.mathcs.nlp.common.Joiner;
-
+import edu.emory.mathcs.nlp.common.constant.StringConst;
+import edu.emory.mathcs.nlp.common.util.Joiner;
 
 
 /**
@@ -29,7 +29,7 @@ import edu.emory.mathcs.nlp.common.Joiner;
  */
 public class StringVector implements Serializable, Iterable<StringItem>
 {
-	private static final long serialVersionUID = 742197861795848628L;
+	private static final long serialVersionUID = -4051551027968492079L;
 	private List<StringItem> vector;
 	
 	public StringVector()
@@ -42,12 +42,12 @@ public class StringVector implements Serializable, Iterable<StringItem>
 		return vector.get(index);
 	}
 	
-	public void add(short type, String value)
+	public void add(int type, String value)
 	{
 		add(new StringItem(type, value));
 	}
 	
-	public void add(short type, String value, double weight)
+	public void add(int type, String value, float weight)
 	{
 		add(new StringItem(type, value, weight));
 	}
@@ -71,6 +71,6 @@ public class StringVector implements Serializable, Iterable<StringItem>
 	@Override
 	public String toString()
 	{
-		return Joiner.join(vector, " ");
+		return Joiner.join(vector, StringConst.SPACE);
 	}
 }
