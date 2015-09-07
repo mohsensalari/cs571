@@ -15,9 +15,8 @@
  */
 package edu.emory.mathcs.nlp.learn.sgd.perceptron;
 
-import edu.emory.mathcs.nlp.learn.instance.Instance;
-import edu.emory.mathcs.nlp.learn.instance.Prediction;
 import edu.emory.mathcs.nlp.learn.sgd.StochasticGradientDescent;
+import edu.emory.mathcs.nlp.learn.util.Instance;
 import edu.emory.mathcs.nlp.learn.vector.Vector;
 import edu.emory.mathcs.nlp.learn.weight.WeightVector;
 
@@ -26,7 +25,7 @@ import edu.emory.mathcs.nlp.learn.weight.WeightVector;
  */
 public class BinomialPerceptron extends StochasticGradientDescent
 {
-	public BinomialPerceptron(WeightVector weightVector, boolean average, float learningRate)
+	public BinomialPerceptron(WeightVector weightVector, boolean average, double learningRate)
 	{
 		super(weightVector, average, learningRate);
 	}
@@ -35,14 +34,13 @@ public class BinomialPerceptron extends StochasticGradientDescent
 	protected void updateWeightVector(Instance instance, int steps)
 	{
 		Vector x = instance.getVector();
-		Prediction p = weight_vector.predictBest(x);
-		int y = instance.getLabel(), yhat = p.getLabel();
+		int y = instance.getLabel(), yhat = weight_vector.predictBest(x).getLabel();
 		
 		if (y != yhat)
 		{
-			float gradient = learning_rate * y;
+			double gradient = learning_rate * y;
 			weight_vector.update(x, y, gradient);
-			if (isAveraged()) weight_vector.update(x, y, gradient * steps);
+			if (isAveraged()) average_vector.update(x, y, gradient * steps);
 		}
 	}
 }

@@ -18,8 +18,8 @@ package edu.emory.mathcs.nlp.learn.weight;
 import java.util.Arrays;
 
 import edu.emory.mathcs.nlp.common.collection.tuple.Pair;
-import edu.emory.mathcs.nlp.learn.instance.BinomialLabel;
-import edu.emory.mathcs.nlp.learn.instance.Prediction;
+import edu.emory.mathcs.nlp.learn.util.BinomialLabel;
+import edu.emory.mathcs.nlp.learn.util.Prediction;
 import edu.emory.mathcs.nlp.learn.vector.IndexValuePair;
 import edu.emory.mathcs.nlp.learn.vector.Vector;
 
@@ -30,6 +30,12 @@ public class BinomialWeightVector extends WeightVector
 {
 	private static final long serialVersionUID = 7868307353161553611L;
 
+	public BinomialWeightVector()
+	{
+		super(2, 0);
+		weight_vector = new float[0];
+	}
+	
 	public BinomialWeightVector(int featureSize)
 	{
 		super(2, featureSize);
@@ -54,7 +60,10 @@ public class BinomialWeightVector extends WeightVector
 		double score = 0;
 		
 		for (IndexValuePair p : x)
-			score += weight_vector[p.getIndex()] * p.getValue();
+		{
+			if (p.getIndex() < feature_size)
+				score += weight_vector[p.getIndex()] * p.getValue();
+		}
 		
 		return score;
 	}

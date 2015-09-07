@@ -19,7 +19,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import edu.emory.mathcs.nlp.learn.instance.Instance;
+import edu.emory.mathcs.nlp.common.util.DSUtils;
+import edu.emory.mathcs.nlp.learn.util.Instance;
+import edu.emory.mathcs.nlp.learn.util.Prediction;
+import edu.emory.mathcs.nlp.learn.vector.Vector;
 import edu.emory.mathcs.nlp.learn.weight.WeightVector;
 
 /**
@@ -29,7 +32,7 @@ public abstract class StochasticGradientDescent
 {
 	protected WeightVector average_vector;
 	protected WeightVector weight_vector;
-	protected float        learning_rate;
+	protected double       learning_rate;
 	protected Random       random;
 	
 	/**
@@ -37,12 +40,18 @@ public abstract class StochasticGradientDescent
 	 * @param average if true, use averaged SGD.
 	 * @param learningRate the learning rate.
 	 */
-	public StochasticGradientDescent(WeightVector weightVector, boolean average, float learningRate)
+	public StochasticGradientDescent(WeightVector weightVector, boolean average, double learningRate)
 	{
 		average_vector = average ? weightVector.createEmptyVector() : null;
 		weight_vector  = weightVector;
 		learning_rate  = learningRate;
 		random         = new Random(5);
+	}
+	
+	/** Calls {@link #train(List, int)} for 1 epoch. */
+	public void train(List<Instance> instances)
+	{
+		train(instances, 1);
 	}
 	
 	/**
@@ -89,5 +98,18 @@ public abstract class StochasticGradientDescent
  	public boolean isAveraged()
 	{
 		return average_vector != null;
+	}
+ 	
+ 	protected int bestBinomialLabelHinge(Vector x)
+	{
+		Prediction p = weight_vector.predictBest(x);
+		return (Math.abs(p.getScore()) >= 0.5) ? p.getLabel() : -p.getLabel();
+	}
+ 	
+ 	protected int bestMultinomiaLabelHinge(Instance instance)
+	{
+		double[] scores = weight_vector.scores(instance.getVector());
+		scores[instance.getLabel()] -= 1;
+		return DSUtils.maxIndex(scores);
 	}
 }
