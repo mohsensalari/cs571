@@ -41,12 +41,12 @@ public class POSDevelop
 	@Test
 	public void develop() throws IOException
 	{
-		final String  root = "/Users/jdchoi/Documents/Data/experiments/wsj/pos/";
+		final String  root = "/Users/bong/IdeaProjects/Data/wsj/pos/";
 		final boolean average = false;
 		final double  ambiguity_class_threshold = 0.4;
 		final double  learning_rate = 0.02;
 		final double  ridge = 0.1;
-		final int     epochs = 100;
+		final int     epochs = 1;
 		final int     label_cutoff   = 2;
 		final int     feature_cutoff = 2;
 		
