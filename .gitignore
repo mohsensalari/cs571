@@ -4,3 +4,6 @@
 cs571.iml
 target/MANIFEST.MF
 target/
+out/
+src/main/main.iml
+src/test/test.iml
