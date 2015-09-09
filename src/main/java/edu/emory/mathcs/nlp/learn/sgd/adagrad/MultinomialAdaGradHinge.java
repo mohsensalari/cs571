@@ -34,14 +34,21 @@ public class MultinomialAdaGradHinge extends AbstractAdaGradHinge
 	{
 		Vector x = instance.getVector();
 		int yp = instance.getLabel(), yn = bestMultinomiaLabelHinge(instance);
+		boolean l2 = true;
 		
 		if (yp != yn)
 		{
 			updateDiagonals(x, yp);
 			updateDiagonals(x, yn);
-			
-			weight_vector.update(x, yp, (i,j) ->  getGradient(i,j));
-			weight_vector.update(x, yn, (i,j) -> -getGradient(i,j));
+
+			if (l2) {
+				weight_vector.updateL2(x, yp, (i, j) -> getGradient(i, j));
+				weight_vector.updateL2(x, yn, (i, j) -> -getGradient(i,j));
+			}
+			else {
+				weight_vector.update(x, yp, (i, j) -> getGradient(i, j));
+				weight_vector.update(x, yn, (i, j) -> -getGradient(i, j));
+			}
 			
 			if (isAveraged())
 			{

@@ -33,6 +33,7 @@ public abstract class WeightVector implements Serializable
 	protected float[] weight_vector;
 	protected int     label_size;
 	protected int     feature_size;
+	protected double  lambda = 1;
 	
 	public WeightVector(int labelSize, int featureSize)
 	{
@@ -88,6 +89,14 @@ public abstract class WeightVector implements Serializable
 		for (IndexValuePair p : x)
 			add(label, p.getIndex(), gradient * p.getValue());
 	}
+
+	public void updateL2(Vector x, int label, double gradient)
+	{
+		for (IndexValuePair p : x) {
+			double w = weight_vector[indexOf(label, p.getIndex())];
+			add(label, p.getIndex(), gradient * (p.getValue()-lambda*w));
+		}
+	}
 	
 	/** @param gradient takes the (label, featureIndex) and returns the gradient to update. */
 	public void update(Vector x, int label, BiFunction<Integer,Integer,Double> gradient)
@@ -95,7 +104,17 @@ public abstract class WeightVector implements Serializable
 		for (IndexValuePair p : x)
 			add(label, p.getIndex(), gradient.apply(label, p.getIndex()) * p.getValue());
 	}
-	
+
+	/** @param gradient takes the (label, featureIndex) and returns the gradient to update. */
+	public void updateL2(Vector x, int label, BiFunction<Integer,Integer,Double> gradient)
+	{
+		for (IndexValuePair p : x) {
+			double w = weight_vector[indexOf(label, p.getIndex())];
+			add(label, p.getIndex(), gradient.apply(label, p.getIndex()) * (p.getValue()-lambda*w));
+		}
+	}
+
+
 	/** Fills this weight vector with the specific value. */
 	public void fill(float value)
 	{

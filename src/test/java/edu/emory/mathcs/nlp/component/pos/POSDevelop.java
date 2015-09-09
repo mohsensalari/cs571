@@ -47,7 +47,7 @@ public class POSDevelop
 		final double  ambiguity_class_threshold = 0.4;
 		final double  learning_rate = 0.02;
 		final double  ridge = 0.1;
-		final int     epochs = 1;
+		final int     epochs = 100;
 		final int     label_cutoff   = 2;
 		final int     feature_cutoff = 2;
 		

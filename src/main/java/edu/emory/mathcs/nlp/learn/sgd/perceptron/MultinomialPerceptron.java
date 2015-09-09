@@ -35,11 +35,18 @@ public class MultinomialPerceptron extends StochasticGradientDescent
 	{
 		Vector x = instance.getVector();
 		int yp = instance.getLabel(), yn = weight_vector.predictBest(x).getLabel();
+		boolean l2 = true;
 		
 		if (yp != yn)
 		{
-			weight_vector.update(x, yp,  learning_rate);
-			weight_vector.update(x, yn, -learning_rate);
+			if (l2) {
+				weight_vector.updateL2(x, yp, learning_rate);
+				weight_vector.updateL2(x, yn, -learning_rate);
+			}
+			else {
+				weight_vector.update(x, yp, learning_rate);
+				weight_vector.update(x, yn, -learning_rate);
+			}
 			
 			if (isAveraged())
 			{
