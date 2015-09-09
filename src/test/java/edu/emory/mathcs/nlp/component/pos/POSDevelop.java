@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
 
+import edu.emory.mathcs.nlp.learn.sgd.perceptron.MultinomialPerceptron;
 import org.junit.Test;
 
 import edu.emory.mathcs.nlp.common.util.FileUtils;
@@ -67,9 +68,16 @@ public class POSDevelop
 		tagger.setAmbiguityClassMap(ambi);
 		iterate(reader, trainFiles, nodes -> tagger.process(nodes));
 		model.vectorize(label_cutoff, feature_cutoff);
-		
-		// train the statistical model using the development data
-		StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), average, learning_rate, ridge);
+
+//		System.out.printf(model.getWeightVector().toString());
+
+				// train the statistical model using the development data
+//		StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), true, learning_rate, ridge);
+// 		StochasticGradientDescent sgd = new MultinomialAdaGradHinge(model.getWeightVector(), false, learning_rate, ridge);
+//		StochasticGradientDescent sgd = new MultinomialPerceptron(model.getWeightVector(), true, learning_rate);
+				StochasticGradientDescent sgd = new MultinomialPerceptron(model.getWeightVector(), false, learning_rate);
+
+
 		Eval eval = new AccuracyEval();
 		tagger.setFlag(NLPFlag.EVALUATE);
 		tagger.setEval(eval);
@@ -79,7 +87,8 @@ public class POSDevelop
 			sgd.train(model.getInstanceList());
 			eval.clear();
 			iterate(reader, developFiles, nodes -> tagger.process(nodes));
-			System.out.printf("%3d: %5.2f\n", i, eval.score());
+//			System.out.printf("%3d: %5.2f\n", i, eval.score());
+			System.out.printf("%5.2f, ", eval.score());
 		}
 	}
 	
