@@ -29,17 +29,23 @@ import edu.emory.mathcs.nlp.learn.vector.Vector;
 public class BinomialWeightVector extends WeightVector
 {
 	private static final long serialVersionUID = 7868307353161553611L;
-
+	
 	public BinomialWeightVector()
 	{
 		super(2, 0);
-		weight_vector = new float[0];
 	}
 	
 	public BinomialWeightVector(int featureSize)
 	{
 		super(2, featureSize);
+	}
+	
+	@Override
+	public void init(int labelSize, int featureSize)
+	{
 		weight_vector = new float[featureSize];
+		label_size    = 2;
+		feature_size  = featureSize;
 	}
 	
 	@Override
