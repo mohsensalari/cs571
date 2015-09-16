@@ -37,8 +37,7 @@ public abstract class WeightVector implements Serializable
 	
 	public WeightVector(int labelSize, int featureSize)
 	{
-		label_size   = labelSize;
-		feature_size = featureSize;
+		init(labelSize, featureSize);
 	}
 	
 	/** @return a vector whose size is the same as this vector but the values are initialized to 0. */
@@ -73,6 +72,22 @@ public abstract class WeightVector implements Serializable
 		weight_vector = array;
 	}
 	
+	public float[] getWeights(int label)
+	{
+		float[] w = new float[feature_size];
+		
+		for (int i=0; i<feature_size; i++)
+			w[i] = get(label, i);
+		
+		return w;
+	}
+	
+	public void setWeights(int label, float[] w)
+	{
+		for (int i=0; i<feature_size; i++)
+			weight_vector[indexOf(label, i)] = w[i];
+	}
+	
 	public float get(int label, int featureIndex)
 	{
 		return weight_vector[indexOf(label, featureIndex)];
@@ -82,6 +97,11 @@ public abstract class WeightVector implements Serializable
 	public void add(int label, int featureIndex, double value)
 	{
 		weight_vector[indexOf(label, featureIndex)] += value;
+	}
+	
+	public void multiply(int label, int featureIndex, double multiplier)
+	{
+		weight_vector[indexOf(label, featureIndex)] *= multiplier;
 	}
 	
 	public void update(Vector x, int label, double gradient)
@@ -121,11 +141,30 @@ public abstract class WeightVector implements Serializable
 		Arrays.fill(weight_vector, value);
 	}
 	
+	public void multiply(double multiplier)
+	{
+		for (int i=0; i<weight_vector.length; i++)
+			weight_vector[i] *= multiplier;
+	}
+	
+	public void add(float[] array)
+	{
+		for (int i=0; i<weight_vector.length; i++)
+			weight_vector[i] += array[i];
+	}
+	
+	public void add(WeightVector vector)
+	{
+		add(vector.toArray());
+	}
+	
 	@Override
 	public String toString()
 	{
 		return Arrays.toString(weight_vector);
 	}
+	
+	public abstract void init(int labelSize, int featureSize);
 	
 	/**
 	 * Expands the size of this weight vector.
