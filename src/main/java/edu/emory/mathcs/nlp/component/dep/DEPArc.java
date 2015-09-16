@@ -13,16 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.emory.mathcs.nlp.component.util;
+package edu.emory.mathcs.nlp.component.dep;
+
+import edu.emory.mathcs.nlp.component.util.node.AbstractArc;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public enum NLPFlag
+public class DEPArc extends AbstractArc<DEPNode>
 {
-	COLLECT,
-	TRAIN,
-	AGGREGATE,
-	EVALUATE,
-	DECODE;
+	private static final long serialVersionUID = -9099516205158258095L;
+
+	public DEPArc(DEPNode node, String label)
+	{
+		set(node, label);
+	}
+
+	@Override
+	public String toString()
+	{
+		return n_node.getID() + DELIM + s_label;
+	}
+	
+	@Override
+	public int compareTo(AbstractArc<DEPNode> arc)
+	{
+		return n_node.compareTo(arc.getNode());
+	}
 }
