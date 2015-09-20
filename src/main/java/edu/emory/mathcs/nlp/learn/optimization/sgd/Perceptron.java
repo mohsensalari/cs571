@@ -26,6 +26,7 @@ import edu.emory.mathcs.nlp.learn.weight.WeightVector;
  */
 public class Perceptron extends StochasticGradientDescent
 {
+	boolean l2 = false;
 	public Perceptron(WeightVector weightVector, boolean average, double learningRate)
 	{
 		super(weightVector, average, learningRate);
