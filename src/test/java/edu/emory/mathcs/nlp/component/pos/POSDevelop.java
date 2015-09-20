@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
 
-import edu.emory.mathcs.nlp.learn.sgd.perceptron.MultinomialPerceptron;
+import edu.emory.mathcs.nlp.learn.optimization.sgd.Perceptron;
 import org.junit.Test;
 
 import edu.emory.mathcs.nlp.common.util.FileUtils;
@@ -42,7 +42,7 @@ public class POSDevelop
 	@Test
 	public void develop() throws IOException
 	{
-		final String  root = "/Users/bong/IdeaProjects/Data/wsj/pos/";
+		final String  root = "~/IdeaProjects/Data/wsj/pos/";
 		final boolean average = false;
 		final double  ambiguity_class_threshold = 0;
 		final int     epochs = 100;
