@@ -13,18 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.emory.mathcs.nlp.component.util.config;
+package edu.emory.mathcs.nlp.component.dep;
+
+import edu.emory.mathcs.nlp.component.util.node.AbstractArc;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public interface OptimizerXML
+public class DEPArc extends AbstractArc<DEPNode>
 {
-//	========================== ALGORITHMS ==========================
+	private static final long serialVersionUID = -9099516205158258095L;
+
+	public DEPArc(DEPNode node, String label)
+	{
+		set(node, label);
+	}
+
+	@Override
+	public String toString()
+	{
+		return n_node.getID() + DELIM + s_label;
+	}
 	
-	String PERCEPTRON			= "perceptron";
-	String ADAGRAD				= "adagrad";
-	String ADAGRAD_MINI_BATCH	= "adagrad-mini-batch";
-	String ADADELTA_MINI_BATCH	= "adadelta-mini-batch";
-	String LIBLINEAR_L2_SVC		= "liblinear-l2-svc";
+	@Override
+	public int compareTo(AbstractArc<DEPNode> arc)
+	{
+		return n_node.compareTo(arc.getNode());
+	}
 }
