@@ -90,7 +90,8 @@ public class POSTrain extends NLPTrain<POSNode,String,POSState<POSNode>>
 	
 	static public void main(String[] args)
 	{
-		BasicConfigurator.configure();
-		new POSTrain(args).train();
+	    BasicConfigurator.configure();
+	    System.out.println("test2");
+	    new POSTrain(args).train();
 	}
 }
