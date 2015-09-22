@@ -24,9 +24,8 @@ import edu.emory.mathcs.nlp.learn.weight.WeightVector;
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public class Perceptron extends StochasticGradientDescent
+public class Perceptron extends SGDClassification
 {
-	boolean l2 = false;
 	public Perceptron(WeightVector weightVector, boolean average, double learningRate)
 	{
 		super(weightVector, average, learningRate);
@@ -36,41 +35,24 @@ public class Perceptron extends StochasticGradientDescent
 	protected void updateBinomial(Instance instance)
 	{
 		Vector x = instance.getVector();
-		int yp = instance.getLabel();
-		int yn = weight_vector.predictBest(x).getLabel();
-		
-		if (yp != yn)
-		{
-			double gradient = learning_rate * yp;
-			weight_vector.update(x, yp, gradient);
-			if (isAveraged()) average_vector.update(x, yp, gradient * steps);
-		}
+		int   yp = instance.getLabel();	
+		int   yn = weight_vector.predictBest(x).getLabel();
+		if (yp != yn) update(yp*2-1, x);  // yp = {0, 1} -> {-1, 1}
 	}
 	
 	@Override
 	protected void updateMultinomial(Instance instance)
 	{
 		Vector x = instance.getVector();
-		int yp = instance.getLabel();
-		int yn = weight_vector.predictBest(x).getLabel();
-		
-		if (yp != yn)
-		{
-			if (l2) {
-				weight_vector.updateL2(x, yp, learning_rate);
-				weight_vector.updateL2(x, yn, -learning_rate);
-			}
-			else {
-				weight_vector.update(x, yp, learning_rate);
-				weight_vector.update(x, yn, -learning_rate);
-			}
-			
-			if (isAveraged())
-			{
-				average_vector.update(x, yp,  learning_rate * steps);
-				average_vector.update(x, yn, -learning_rate * steps);
-			}
-		}
+		int   yp = instance.getLabel();
+		int   yn = weight_vector.predictBest(x).getLabel();
+		if (yp != yn) update(yp, yn, x);
+	}
+	
+	@Override
+	protected double getGradient(int y, int xi)
+	{
+		return learning_rate;
 	}
 
 	@Override

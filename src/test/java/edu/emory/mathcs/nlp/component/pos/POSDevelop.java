@@ -19,9 +19,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
 
-import edu.emory.mathcs.nlp.learn.optimization.sgd.Perceptron;
-import org.junit.Test;
-
 import edu.emory.mathcs.nlp.common.util.FileUtils;
 import edu.emory.mathcs.nlp.common.util.IOUtils;
 import edu.emory.mathcs.nlp.component.util.NLPFlag;
@@ -39,10 +36,10 @@ import edu.emory.mathcs.nlp.learn.weight.MultinomialWeightVector;
  */
 public class POSDevelop
 {
-	@Test
+//	@Test
 	public void develop() throws IOException
 	{
-		final String  root = "~/IdeaProjects/Data/wsj/pos/";
+		final String  root = "/Users/jdchoi/Documents/Data/experiments/wsj/pos/";
 		final boolean average = false;
 		final double  ambiguity_class_threshold = 0;
 		final int     epochs = 100;
@@ -71,7 +68,6 @@ public class POSDevelop
 		
 		// train the statistical model using the development data
 		OnlineOptimizer sgd = new AdaDeltaMiniBatch(model.getWeightVector(), 0.1, average, 0.01, 0.2);
-
 		Eval eval = new AccuracyEval();
 		tagger.setFlag(NLPFlag.EVALUATE);
 		tagger.setEval(eval);
@@ -81,8 +77,7 @@ public class POSDevelop
 			sgd.train(model.getInstanceList());
 			eval.clear();
 			iterate(reader, developFiles, nodes -> tagger.process(nodes));
-//			System.out.printf("%3d: %5.2f\n", i, eval.score());
-			System.out.printf("%5.2f, ", eval.score());
+			System.out.printf("%3d: %5.2f\n", i, eval.score());
 		}
 	}
 	
