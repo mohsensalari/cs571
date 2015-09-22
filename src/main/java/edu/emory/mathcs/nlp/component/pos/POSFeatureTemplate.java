@@ -37,21 +37,16 @@ public class POSFeatureTemplate<N extends POSNode> extends FeatureTemplate<N,POS
 	protected void init()
 	{
 		// 1-gram features 
-		add(new FeatureItem<>(-3, Field.simplified_word_form));
 		add(new FeatureItem<>(-2, Field.simplified_word_form));
 		add(new FeatureItem<>(-1, Field.simplified_word_form));
 		add(new FeatureItem<>( 0, Field.simplified_word_form));
 		add(new FeatureItem<>( 1, Field.simplified_word_form));
 		add(new FeatureItem<>( 2, Field.simplified_word_form));
-		add(new FeatureItem<>( 3, Field.simplified_word_form));
 
-		add(new FeatureItem<>(-2, Field.word_shape, 2));
 		add(new FeatureItem<>(-1, Field.word_shape, 2));
 		add(new FeatureItem<>( 0, Field.word_shape, 2));
 		add(new FeatureItem<>( 1, Field.word_shape, 2));
-		add(new FeatureItem<>( 2, Field.word_shape, 2));
 
-		add(new FeatureItem<>(-4, Field.pos_tag));
 		add(new FeatureItem<>(-3, Field.pos_tag));
 		add(new FeatureItem<>(-2, Field.pos_tag));
 		add(new FeatureItem<>(-1, Field.pos_tag));
@@ -59,7 +54,6 @@ public class POSFeatureTemplate<N extends POSNode> extends FeatureTemplate<N,POS
 		add(new FeatureItem<>( 1, Field.ambiguity_class));
 		add(new FeatureItem<>( 2, Field.ambiguity_class));
 		add(new FeatureItem<>( 3, Field.ambiguity_class));
-		add(new FeatureItem<>( 4, Field.ambiguity_class));
 
 		// 2-gram features
 		add(new FeatureItem<>(-2, Field.uncapitalized_simplified_word_form), new FeatureItem<>(-1, Field.uncapitalized_simplified_word_form));
