@@ -31,6 +31,8 @@ public class POSNode extends NLPNode
 	protected String pos_tag;
 	protected String lemma;
 	
+	public POSNode() {}
+	
 	public POSNode(String form)
 	{
 		super(form);
@@ -56,6 +58,7 @@ public class POSNode extends NLPNode
 		return pos_tag;
 	}
 
+	/** @return the previous pos-tag. */
 	public String setPOSTag(String tag)
 	{
 		String t = pos_tag;
@@ -80,6 +83,7 @@ public class POSNode extends NLPNode
 		return lemma;
 	}
 
+	/** @return the previous lemma. */
 	public String setLemma(String lemma)
 	{
 		String t = lemma;
@@ -87,23 +91,23 @@ public class POSNode extends NLPNode
 		return t;
 	}
 	
+	public boolean isLemma(String lemma)
+	{
+		return lemma.equals(this.lemma);
+	}
+	
+//	============================== HELPERS ==============================
+	
 	@Override
 	public String getValue(Field field)
 	{
 		switch (field)
 		{
-		case lemma: return getLemma();
+		case lemma  : return getLemma();
 		case pos_tag: return getPOSTag();
 		default: return super.getValue(field);
 		}
 	}
-	
-	public boolean isLemma(String lemma)
-	{
-		return lemma.equals(lemma);
-	}
-	
-//	============================== HELPERS ==============================
 	
 	@Override
 	public String toString() 

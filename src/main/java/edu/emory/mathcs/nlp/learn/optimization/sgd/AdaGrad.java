@@ -26,7 +26,7 @@ import edu.emory.mathcs.nlp.learn.weight.WeightVector;
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public class AdaGrad extends StochasticGradientDescent
+public class AdaGrad extends SGDClassification
 {
 	protected final double epsilon = 0.00001;
 	protected WeightVector diagonals;
@@ -41,14 +41,14 @@ public class AdaGrad extends StochasticGradientDescent
 	protected void updateBinomial(Instance instance)
 	{
 		Vector x = instance.getVector();
-		int yp = instance.getLabel();
-		int yn = bestHingeBinomial(x);
+		int   yp = instance.getLabel();	
+		int   yn = binomialBestHingeLoss(instance);
 		
 		if (yp != yn)
 		{
-			updateDiagonals(x, yp);
-			weight_vector.update(x, yp, (i,j) -> getGradient(i,j) * yp);
-			if (isAveraged()) average_vector.update(x, yp, (i,j) -> getGradient(i,j) * yp * steps);
+			yp *= 2 - 1; // yp = {0, 1} -> {-1, 1}
+			updateDiagonals(yp, x);
+			update(yp, x);
 		}
 	}
 
@@ -56,34 +56,27 @@ public class AdaGrad extends StochasticGradientDescent
 	protected void updateMultinomial(Instance instance)
 	{
 		Vector x = instance.getVector();
-		int yp = instance.getLabel();
-		int yn = bestHingeMultinomial(instance);
+		int   yp = instance.getLabel();
+		int   yn = multinomialBestHingeLoss(instance);
 		
 		if (yp != yn)
 		{
-			updateDiagonals(x, yp);
-			updateDiagonals(x, yn);
-			
-			weight_vector.update(x, yp, (i,j) ->  getGradient(i,j));
-			weight_vector.update(x, yn, (i,j) -> -getGradient(i,j));
-			
-			if (isAveraged())
-			{
-				average_vector.update(x, yp, (i,j) ->  getGradient(i,j) * steps);
-				average_vector.update(x, yn, (i,j) -> -getGradient(i,j) * steps);
-			}
+			updateDiagonals(yp, x);
+			updateDiagonals(yn, x);
+			update(yp, yn, x);
 		}
 	}
 	
-	private void updateDiagonals(Vector x, int label)
+	private void updateDiagonals(int y, Vector x)
 	{
 		for (IndexValuePair p : x)
-			diagonals.add(label, p.getIndex(), MathUtils.sq(p.getValue()));
+			diagonals.add(y, p.getIndex(), MathUtils.sq(p.getValue()));
 	}
 	
-	private double getGradient(int label, int featureIndex)
+	@Override
+	protected double getGradient(int y, int xi)
 	{
-		return learning_rate / (epsilon + Math.sqrt(diagonals.get(label, featureIndex)));
+		return learning_rate / (epsilon + Math.sqrt(diagonals.get(y, xi)));
 	}
 	
 	@Override

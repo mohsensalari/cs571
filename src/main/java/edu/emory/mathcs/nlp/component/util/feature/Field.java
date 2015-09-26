@@ -32,15 +32,15 @@ public enum Field
 
 	// part-of-speech tagging features
 	lemma,
+	feats,
 	pos_tag,
 	ambiguity_class,
 	
 	// dependency parsing features
 	dependency_label,
 	distance,
-	
+	valency,
 	
 	// more
-	feats,
 	binary;	// set
 }

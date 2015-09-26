@@ -15,6 +15,10 @@
  */
 package edu.emory.mathcs.nlp.component.dep;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.ByteArrayInputStream;
+
 import org.junit.Test;
 
 import edu.emory.mathcs.nlp.common.util.IOUtils;
@@ -34,6 +38,9 @@ public class DEPIndexTest
 		TSVReader<DEPNode> reader = new TSVReader<DEPNode>(index);
 		reader.open(IOUtils.createFileInputStream("src/main/resources/dat/wsj_0001.dep"));
 		DEPNode[] nodes = reader.next();
-		System.out.println(Joiner.join(nodes, "\n"));
+		String s = Joiner.join(nodes, "\n", 1);
+		reader.open(new ByteArrayInputStream(s.getBytes()));
+		nodes = reader.next();
+		assertEquals(s, Joiner.join(nodes, "\n", 1));
 	}
 }
