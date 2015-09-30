@@ -33,6 +33,7 @@ import edu.emory.mathcs.nlp.component.util.reader.TSVReader;
 import edu.emory.mathcs.nlp.component.util.train.NLPTrain;
 import edu.emory.mathcs.nlp.learn.model.StringModel;
 import edu.emory.mathcs.nlp.learn.weight.MultinomialWeightVector;
+import org.apache.log4j.BasicConfigurator;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
@@ -78,6 +79,7 @@ public class DEPTrain extends NLPTrain<DEPNode,DEPState<DEPNode>>
 	
 	static public void main(String[] args)
 	{
+		BasicConfigurator.configure();
 		new DEPTrain(args).train();
 	}
 }
