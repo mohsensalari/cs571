@@ -13,27 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.emory.mathcs.nlp.deeplearning.activation;
-
-import org.apache.commons.math3.util.FastMath;
+package edu.emory.mathcs.nlp.component.util.feature;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public class SoftmaxFunction implements ActivationFunction
+public enum Direction
 {
-	@Override
-	public void transform(double[] scores)
-	{
-		double sum = 0;
-		
-		for (int i=0; i<scores.length; i++)
-		{
-			scores[i] = FastMath.exp(scores[i]);
-			sum += scores[i];
-		}
-		
-		for (int i=0; i<scores.length; i++)
-			scores[i] /= sum;
-	}
+	left,
+	right,
+	up,
+	down,
+	all;
 }

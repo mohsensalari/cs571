@@ -13,16 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package edu.emory.mathcs.nlp.component.util.node;
+package edu.emory.mathcs.nlp.component.dep.feature;
+
+import edu.emory.mathcs.nlp.component.dep.DEPFeatureTemplate;
+import edu.emory.mathcs.nlp.component.util.feature.FeatureItem;
+import edu.emory.mathcs.nlp.component.util.feature.Field;
+import edu.emory.mathcs.nlp.component.util.feature.Source;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
  */
-public enum Direction
+public class DEPFeatureTemplate2 extends DEPFeatureTemplate
 {
-	l,	// left
-	r,	// right
-	u,	// up
-	d,	// down
-	a;	// all
+	private static final long serialVersionUID = 4717085054409332081L;
+
+	@Override
+	protected void init()
+	{
+		// lemma features 
+		add(new FeatureItem<>(Source.i, 0, Field.word_form));
+		add(new FeatureItem<>(Source.j, 0, Field.word_form));
+		add(new FeatureItem<>(Source.i, 0, Field.dependency_label));
+	}
 }

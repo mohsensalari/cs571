@@ -17,62 +17,20 @@ package edu.emory.mathcs.nlp.component.dep;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.FileInputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
 
-import edu.emory.mathcs.nlp.component.util.node.FeatMap;
-
 /**
- * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
+ * @author Mohsen Salari
  */
-public class DEPNodeTest
+public class DEPNodeTestMohsenSalari
 {
 	@Test
-	public void testBasicFields()
+	public void test() throws Exception
 	{
-		DEPNode node = new DEPNode(1, "Jinho");
-		
-		assertEquals(1      , node.getID());
-		assertEquals("Jinho", node.getWordForm());
-		
-		node = new DEPNode(1, "Jinho", "jinho", "NNP", new FeatMap("fst=jinho|lst=choi"));
-		
-		assertEquals(1       , node.getID());
-		assertEquals("Jinho" , node.getWordForm());
-		assertEquals("jinho" , node.getLemma());
-		assertEquals("NNP"   , node.getPOSTag());
-		
-		node.removeFeat("fst");
-		assertEquals(null  , node.getFeat("fst"));
-		assertEquals("choi", node.getFeat("lst"));
-		
-		node.putFeat("fst", "Jinho");
-		assertEquals("Jinho", node.getFeat("fst"));
-
-	}
-	
-	@Test
-	public void testSetters()
-	{
-		DEPNode node1 = new DEPNode(1, "He");
-		DEPNode node2 = new DEPNode(2, "bought");
-		DEPNode node3 = new DEPNode(3, "a");
-		DEPNode node4 = new DEPNode(4, "car");
-		
-		node2.addDependent(node4, "dobj");
-		node2.addDependent(node1, "nsubj");
-		node4.addDependent(node3, "det");
-		
-		List<DEPNode> list = node2.getDependentList();
-		assertEquals(node1, list.get(0));
-		assertEquals(node4, list.get(1));
-	}
-	@Test
-	public void otherTests(){
 		DEPNode node1 = new DEPNode(1,"Mohsen");
 		DEPNode node2 = new DEPNode(2,"is");
 		DEPNode node3 = new DEPNode(3,"spending");
@@ -126,8 +84,6 @@ public class DEPNodeTest
 		assertEquals(node6, node3SubNodeList.get(5));
 		assertEquals(node7, node3SubNodeList.get(6));
 		assertEquals(node8, node3SubNodeList.get(7));
-		
-		
 	}
-	
+
 }
