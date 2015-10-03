@@ -25,6 +25,7 @@ import edu.emory.mathcs.nlp.component.dep.DEPParser;
 import edu.emory.mathcs.nlp.component.dep.DEPState;
 import edu.emory.mathcs.nlp.component.dep.feature.DEPFeatureTemplate0;
 import edu.emory.mathcs.nlp.component.dep.feature.DEPFeatureTemplate2;
+import edu.emory.mathcs.nlp.component.dep.feature.DEPFeatureTemplateStanford;
 import edu.emory.mathcs.nlp.component.util.NLPComponent;
 import edu.emory.mathcs.nlp.component.util.config.NLPConfig;
 import edu.emory.mathcs.nlp.component.util.eval.Eval;
@@ -70,6 +71,7 @@ public class DEPTrain extends NLPTrain<DEPNode,DEPState<DEPNode>>
 		{
 		case 0: return new DEPFeatureTemplate0();
 		case 2: return new DEPFeatureTemplate2();
+		case 100: return new DEPFeatureTemplateStanford();
 		default: throw new IllegalArgumentException("Unknown feature template: "+feature_template);
 		}
 	}
