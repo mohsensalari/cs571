@@ -76,14 +76,6 @@ public class DEPState<N extends DEPNode> extends NLPState<N>
 	
 	private boolean isOracleReduce()
 	{
-<<<<<<< HEAD
-		DEPNode stack = getStack(0);
-		if (!stack.hasHead()) return false;
-		
-		for (int i=input+1; i<nodes.length; i++)
-		{
-			if (oracle[i].isNode(stack))
-=======
 		if (!getStack().hasHead()) return false;
 		int s;
 		
@@ -106,7 +98,6 @@ public class DEPState<N extends DEPNode> extends NLPState<N>
 		for (int i=input+1; i<nodes.length; i++)
 		{
 			if (oracle[i].isNode(s))
->>>>>>> a1e56289d717af112d5efd99060674661dfdfa00
 				return false;
 		}
 		
