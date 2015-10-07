@@ -53,7 +53,7 @@ public abstract class NLPTrain<N,S extends NLPState<N>>
 	@Option(name="-de", usage="development file extension (default: *)", required=false, metaVar="<string>")
 	public String develop_ext = "*";
 	@Option(name="-f", usage="feature template ID (default: 0)", required=false, metaVar="integer")
-	public int feature_template = 0;
+	public int feature_template = 103;
 	@Option(name="-m", usage="model file (optional)", required=false, metaVar="<filename>")
 	public String model_file = null;
 	

@@ -23,6 +23,7 @@ import edu.emory.mathcs.nlp.component.dep.DEPEval;
 import edu.emory.mathcs.nlp.component.dep.DEPNode;
 import edu.emory.mathcs.nlp.component.dep.DEPParser;
 import edu.emory.mathcs.nlp.component.dep.DEPState;
+import edu.emory.mathcs.nlp.component.dep.feature.BonggunMohsenFeatureTemplate;
 import edu.emory.mathcs.nlp.component.dep.feature.DEPFeatureTemplate0;
 import edu.emory.mathcs.nlp.component.dep.feature.DEPFeatureTemplate2;
 import edu.emory.mathcs.nlp.component.dep.feature.DEPFeatureTemplateStanford;
@@ -34,6 +35,7 @@ import edu.emory.mathcs.nlp.component.util.reader.TSVReader;
 import edu.emory.mathcs.nlp.component.util.train.NLPTrain;
 import edu.emory.mathcs.nlp.learn.model.StringModel;
 import edu.emory.mathcs.nlp.learn.weight.MultinomialWeightVector;
+
 import org.apache.log4j.BasicConfigurator;
 
 /**
@@ -72,6 +74,7 @@ public class DEPTrain extends NLPTrain<DEPNode,DEPState<DEPNode>>
 		case 0: return new DEPFeatureTemplate0();
 		case 2: return new DEPFeatureTemplate2();
 		case 100: return new DEPFeatureTemplateStanford();
+		case 103: return new BonggunMohsenFeatureTemplate();
 		default: throw new IllegalArgumentException("Unknown feature template: "+feature_template);
 		}
 	}
