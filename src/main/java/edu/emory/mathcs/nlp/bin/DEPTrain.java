@@ -25,6 +25,7 @@ import edu.emory.mathcs.nlp.component.dep.DEPParser;
 import edu.emory.mathcs.nlp.component.dep.DEPState;
 import edu.emory.mathcs.nlp.component.dep.feature.DEPFeatureTemplate0;
 import edu.emory.mathcs.nlp.component.dep.feature.DEPFeatureTemplate2;
+import edu.emory.mathcs.nlp.component.dep.feature.DEPFeatureTemplateStanford;
 import edu.emory.mathcs.nlp.component.util.NLPComponent;
 import edu.emory.mathcs.nlp.component.util.config.NLPConfig;
 import edu.emory.mathcs.nlp.component.util.eval.Eval;
@@ -33,6 +34,7 @@ import edu.emory.mathcs.nlp.component.util.reader.TSVReader;
 import edu.emory.mathcs.nlp.component.util.train.NLPTrain;
 import edu.emory.mathcs.nlp.learn.model.StringModel;
 import edu.emory.mathcs.nlp.learn.weight.MultinomialWeightVector;
+import org.apache.log4j.BasicConfigurator;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
@@ -69,6 +71,7 @@ public class DEPTrain extends NLPTrain<DEPNode,DEPState<DEPNode>>
 		{
 		case 0: return new DEPFeatureTemplate0();
 		case 2: return new DEPFeatureTemplate2();
+		case 100: return new DEPFeatureTemplateStanford();
 		default: throw new IllegalArgumentException("Unknown feature template: "+feature_template);
 		}
 	}
@@ -78,6 +81,7 @@ public class DEPTrain extends NLPTrain<DEPNode,DEPState<DEPNode>>
 	
 	static public void main(String[] args)
 	{
+		BasicConfigurator.configure();
 		new DEPTrain(args).train();
 	}
 }

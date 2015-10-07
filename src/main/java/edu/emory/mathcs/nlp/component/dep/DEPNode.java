@@ -81,6 +81,11 @@ public class DEPNode extends POSNode implements Comparable<DEPNode>
 		setHead(head);
 		setLabel(label);
 	}
+	public DEPNode(boolean calculateWrod2Vec){
+		if(calculateWrod2Vec){
+			
+		}
+	}
 	
 //	====================================== GETTERS ======================================
 	

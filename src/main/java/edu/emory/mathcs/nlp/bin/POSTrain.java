@@ -35,6 +35,7 @@ import edu.emory.mathcs.nlp.component.util.reader.TSVReader;
 import edu.emory.mathcs.nlp.component.util.train.NLPTrain;
 import edu.emory.mathcs.nlp.learn.model.StringModel;
 import edu.emory.mathcs.nlp.learn.weight.MultinomialWeightVector;
+import org.apache.log4j.BasicConfigurator;
 
 /**
  * @author Jinho D. Choi ({@code jinho.choi@emory.edu})
@@ -91,6 +92,8 @@ public class POSTrain extends NLPTrain<POSNode,POSState<POSNode>>
 	
 	static public void main(String[] args)
 	{
-		new POSTrain(args).train();
+		BasicConfigurator.configure();
+		System.out.println("test2");
+	    new POSTrain(args).train();
 	}
 }
